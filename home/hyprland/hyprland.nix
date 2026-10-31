@@ -152,13 +152,46 @@ in
           _args = [
             "SUPER + SUPER_L"
             (lib.generators.mkLuaInline ''
-              function()
-                local w = hl.get_active_window()
-                if w ~= nil and w.fullscreen and w.fullscreen ~= 0 then
-                  hl.dispatch(hl.dsp.window.fullscreen({ mode = "fullscreen", action = "unset", window = w }))
+              (function()
+                -- Window that was fullscreen when we opened the launcher
+                local saved = nil
+                local ipc = "qs -c ventureshell ipc call launcher "
+
+                local function is_fullscreen(w)
+                  return w ~= nil and w.fullscreen and w.fullscreen ~= 0
                 end
-                hl.dispatch(hl.dsp.exec_cmd("qs -c ventureshell ipc call launcher toggle"))
-              end
+
+                local function same(a, b)
+                  if a == nil or b == nil then return false end
+                  if a == b then return true end
+                  return a.address ~= nil and a.address == b.address
+                end
+
+                return function()
+                  local w = hl.get_active_window()
+
+                  -- Fullscreen window focused: unfullscreen, open launcher, remember the window
+                  if is_fullscreen(w) then
+                    saved = w
+                    hl.dispatch(hl.dsp.window.fullscreen({ mode = "fullscreen", action = "unset", window = w }))
+                    hl.dispatch(hl.dsp.exec_cmd(ipc .. "open"))
+                    return
+                  end
+
+                  -- Nothing fullscreen, but the remembered window is still focused: restore it
+                  if same(w, saved) then
+                    local target = saved
+                    saved = nil
+                    hl.dispatch(hl.dsp.exec_cmd(ipc .. "close"))
+                    hl.dispatch(hl.dsp.window.fullscreen({ mode = "fullscreen", action = "set", window = target }))
+                    return
+                  end
+
+                  -- Anything else: forget the window and behave like a plain toggle
+                  saved = nil
+                  hl.dispatch(hl.dsp.exec_cmd(ipc .. "toggle"))
+                end
+              end)()
             '')
           ];
         }
@@ -177,7 +210,22 @@ in
         {
           _args = [
             "SUPER + F"
-            (lib.generators.mkLuaInline "hl.dsp.window.fullscreen({mode = fullscreen, action = \"toggle\"})")
+            (lib.generators.mkLuaInline ''
+              function()
+                local w = hl.get_active_window()
+                if w == nil then return end
+
+                local is_fs = w.fullscreen and w.fullscreen ~= 0
+
+                -- Entering fullscreen: make sure the launcher is closed.
+                -- Leaving fullscreen: leave the launcher alone.
+                if not is_fs then
+                  hl.dispatch(hl.dsp.exec_cmd("qs -c ventureshell ipc call launcher close"))
+                end
+
+                hl.dispatch(hl.dsp.window.fullscreen({ mode = "fullscreen", action = "toggle", window = w }))
+              end
+            '')
           ];
         }
         {
