@@ -217,10 +217,9 @@ in
 
                 local is_fs = w.fullscreen and w.fullscreen ~= 0
 
-                -- Entering fullscreen: make sure the launcher is closed.
-                -- Leaving fullscreen: leave the launcher alone.
+                -- Entering fullscreen: close all popups.
                 if not is_fs then
-                  hl.dispatch(hl.dsp.exec_cmd("qs -c ventureshell ipc call launcher close"))
+                  hl.dispatch(hl.dsp.exec_cmd("qs -c ventureshell ipc call dock hideAllPopups"))
                 end
 
                 hl.dispatch(hl.dsp.window.fullscreen({ mode = "fullscreen", action = "toggle", window = w }))
