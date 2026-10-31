@@ -155,7 +155,7 @@ in
               (function()
                 -- Window that was fullscreen when we opened the launcher
                 local saved = nil
-                local ipc = "qs -c ventureshell ipc call launcher "
+                local ipc = "qs -c ventureshell ipc call "
 
                 local function is_fullscreen(w)
                   return w ~= nil and w.fullscreen and w.fullscreen ~= 0
@@ -174,7 +174,7 @@ in
                   if is_fullscreen(w) then
                     saved = w
                     hl.dispatch(hl.dsp.window.fullscreen({ mode = "fullscreen", action = "unset", window = w }))
-                    hl.dispatch(hl.dsp.exec_cmd(ipc .. "open"))
+                    hl.dispatch(hl.dsp.exec_cmd(ipc .. "launcher open"))
                     return
                   end
 
@@ -182,14 +182,14 @@ in
                   if same(w, saved) then
                     local target = saved
                     saved = nil
-                    hl.dispatch(hl.dsp.exec_cmd(ipc .. "close"))
+                    hl.dispatch(hl.dsp.exec_cmd(ipc .. "dock hideAllPopups"))
                     hl.dispatch(hl.dsp.window.fullscreen({ mode = "fullscreen", action = "set", window = target }))
                     return
                   end
 
                   -- Anything else: forget the window and behave like a plain toggle
                   saved = nil
-                  hl.dispatch(hl.dsp.exec_cmd(ipc .. "toggle"))
+                  hl.dispatch(hl.dsp.exec_cmd(ipc .. "launcher toggle"))
                 end
               end)()
             '')
