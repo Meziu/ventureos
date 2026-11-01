@@ -11,7 +11,6 @@
     ../../modules/users.nix
     ../../modules/common-settings.nix
     ../../modules/desktop-environment.nix
-    ../../modules/fingerprint-thinkpad-e14.nix
     ../../modules/intel-graphics-drivers.nix
     ../../modules/system-apps-desktop.nix
   ];
