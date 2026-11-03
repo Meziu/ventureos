@@ -18,7 +18,7 @@ in
       config = {
         general = {
           gaps_in = 6;
-          gaps_out = 10;
+          gaps_out = 6;
           border_size = 2;
           col.active_border = "#F28C28";
 
