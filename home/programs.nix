@@ -53,13 +53,6 @@
   };
   programs.discord.enable = true;
 
-  /*programs.hermes-agent.enable = true;
-  services.hermes-agent = {
-    enable = true;
-    gateway.enable = true;
-    settings.model.default = "nvidia/nemotron-3-ultra-550b-a55b:free";
-  }; */
-
   fonts.fontconfig = {
     enable = true;
 

@@ -17,7 +17,6 @@
       url = "github:Meziu/ventureshell";
       flake = false;
     };
-    #hermes-agent.url = "github:NousResearch/hermes-agent";
   };
   outputs =
     {
@@ -26,7 +25,6 @@
       home-manager,
       qs-hyprview,
       ventureshell,
-      #hermes-agent,
       ...
     }@inputs:
     {
@@ -52,7 +50,6 @@
           pkgs = nixpkgs.legacyPackages.x86_64-linux;
           extraSpecialArgs = { inherit inputs; };
           modules = [
-            #hermes-agent.homeManagerModules.default
             ./home/home.nix
           ];
         };
