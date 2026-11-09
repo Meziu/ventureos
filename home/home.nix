@@ -8,6 +8,7 @@ let
 in
 {
   imports = [
+    ../modules/options.nix
     ./hyprland
     ./programs.nix
     ./dev.nix

@@ -3,6 +3,7 @@
 {
   imports = [
     ./hardware-configuration.nix
+    ../../modules/options.nix
     ../../modules/desktop-defaults.nix
   ];
 

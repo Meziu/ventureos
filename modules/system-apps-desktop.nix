@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ config, pkgs, lib, ... }:
 
 {
   programs.firefox.enable = true;
@@ -7,7 +7,13 @@
     enable = true;
     terminal = "kitty";
   };
-  programs.steam = {
+
+  programs.java.enable = true;
+  programs.appimage.enable = true;
+  programs.appimage.binfmt = true;
+  services.flatpak.enable = true;
+
+  programs.steam = lib.mkIf config.ventureos.bundles.games.enable {
     enable = true;
     remotePlay.openFirewall = true;
     dedicatedServer.openFirewall = true;
@@ -15,12 +21,9 @@
     gamescopeSession.enable = true;
     extraPackages = [ pkgs.jdk ];
   };
-
-  programs.gamemode.enable = true;
-  programs.java.enable = true;
-  programs.appimage.enable = true;
-  programs.appimage.binfmt = true;
-  services.flatpak.enable = true;
+  programs.gamemode = lib.mkIf config.ventureos.bundles.games.enable {
+    enable = true;
+  };
 
   environment = {
     sessionVariables.NAUTILUS_4_EXTENSION_DIR = "${pkgs.nautilus-python}/lib/nautilus/extensions-4";
