@@ -35,6 +35,7 @@
         specialArgs = { inherit inputs; };
         modules = [
           ./hosts/vm/configuration.nix
+          ./settings.nix
         ];
       };
       thinkbook = nixpkgs.lib.nixosSystem {
@@ -42,6 +43,7 @@
         specialArgs = { inherit inputs; };
         modules = [
           ./hosts/thinkbook/configuration.nix
+          ./settings.nix
         ];
       };
     };
@@ -52,6 +54,7 @@
         extraSpecialArgs = { inherit inputs; };
         modules = [
           ./home/home.nix
+          ./settings.nix
         ];
       };
     };

@@ -1,16 +1,18 @@
-{ pkgs, ... }:
+{ config, pkgs, lib, ... }:
 
 {
-  home.packages = with pkgs; [
-    texstudio
+  config = lib.mkIf config.ventureos.bundles.tex.enable {
+    home.packages = with pkgs; [
+      texstudio
 
-    (texliveMedium.withPackages (
-      ps: with ps; [
-        hyperref
-        amsmath
-        collection-langitalian
-        collection-mathscience
-      ]
-    ))
-  ];
+      (texliveMedium.withPackages (
+        ps: with ps; [
+          hyperref
+          amsmath
+          collection-langitalian
+          collection-mathscience
+        ]
+      ))
+    ];
+  };
 }

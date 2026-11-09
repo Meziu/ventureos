@@ -1,4 +1,5 @@
 {
+  config,
   ...
 }:
 
@@ -14,8 +15,8 @@ in
 
   nixpkgs.config.allowUnfree = true;
 
-  home.username = "andreaciliberti";
-  home.homeDirectory = "/home/andreaciliberti";
+  home.username = "${config.ventureos.user.name}";
+  home.homeDirectory = "/home/${config.home.username}";
 
   home.keyboard = {
     layout = kb.layout;
@@ -30,5 +31,5 @@ in
     EDITOR = "vim";
   };
 
-  home.stateVersion = "26.05";
+  home.stateVersion = "${config.ventureos.stateVersion}";
 }

@@ -1,10 +1,9 @@
-{ ... }:
+{ config, ... }:
 
 {
-  # Define a user account. Don't forget to set a password with ‘passwd’.
-  users.users."andreaciliberti" = {
+  users.users.${config.ventureos.user.name} = {
     isNormalUser = true;
-    description = "Andrea Ciliberti";
+    description = "${config.ventureos.user.description}";
     extraGroups = [
       "networkmanager"
       "wheel"

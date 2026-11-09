@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ config, pkgs, ... }:
 
 let
   kb = import ./apple-aluminum-keyboard.nix;
@@ -61,5 +61,5 @@ in
 
   networking.firewall.enable = false;
 
-  system.stateVersion = "26.05";
+  system.stateVersion = "${config.ventureos.stateVersion}";
 }
