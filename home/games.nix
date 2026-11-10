@@ -9,6 +9,7 @@
       osu-lazer-bin
       heroic
       itch
+      srb2
     ];
   };
 }
