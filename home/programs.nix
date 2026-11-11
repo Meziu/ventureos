@@ -39,6 +39,7 @@
     inkscape
     pinta
     shotcut
+    rawtherapee
   ];
 
   programs.bash.enable = true;
