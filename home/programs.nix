@@ -40,6 +40,8 @@
     pinta
     shotcut
     rawtherapee
+    darktable
+    digikam
   ];
 
   programs.bash.enable = true;
