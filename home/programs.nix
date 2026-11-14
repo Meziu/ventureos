@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ pkgs, ... }:
 
 {
   imports = [
@@ -125,6 +125,13 @@
               "-E"
             ];
           };
+        };
+
+        JSON = {
+          language_servers = ["json-language-server" "!package-version-server" "..."];
+        };
+        JSONC = {
+          language_servers = ["json-language-server" "!package-version-server" "..."];
         };
       };
     };
